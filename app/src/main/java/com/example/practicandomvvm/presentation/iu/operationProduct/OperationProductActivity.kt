@@ -3,7 +3,9 @@ package com.example.practicandomvvm.presentation.iu.operationProduct
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isVisible
+import com.example.practicandomvvm.R
 import com.example.practicandomvvm.databinding.ActivityOperationProductBinding
 import com.example.practicandomvvm.domain.model.Product
 import com.example.practicandomvvm.presentation.common.UiState
@@ -53,6 +55,10 @@ class OperationProductActivity : AppCompatActivity() {
         binding.includeLayout.toolbar.apply {
             title = "Registrar | Editar"
             subtitle = "Producto"
+            navigationIcon = AppCompatResources.getDrawable(
+                this@OperationProductActivity,
+                R.drawable.ic_back
+            )
 
             setNavigationOnClickListener {
                 onBackPressedDispatcher.onBackPressed()

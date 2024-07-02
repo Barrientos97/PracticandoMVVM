@@ -6,4 +6,6 @@
     <string name="codigo_de_barra">Codigo de Barra</string>
     <string name="precio">precio</string>
     <string name="buscar">buscar</string>
+    <string name="cod_barra">Cod.Barra</string>
+    <string name="dato">Dato</string>
 </resources>
