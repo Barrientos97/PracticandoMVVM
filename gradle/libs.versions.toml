@@ -1,0 +1,62 @@
+[versions]
+agp = "8.2.1"
+kotlin = "1.9.22"
+core-ktx = "1.13.1"
+appcompat= "1.6.1"
+material = "1.12.0"
+constraintlayout = "2.1.4"
+junit = "4.13.2"
+junitVersion = "1.1.5"
+espressoCore = "3.5.1"
+
+retrofit = "2.10.0"
+navigationFragmentKtx = "2.7.7"
+lifecycleLivedataKtx = "2.8.2"
+hiltAndroid = "2.51"
+roomKtx = "2.6.1"
+kspVersion = "1.9.0-1.0.13"
+libreriaPcs = "1.0.3"
+activity = "1.8.0"
+
+
+
+[libraries]
+android-core-ktx = {group = "androidx.core", name = "core-ktx", version.ref = "core-ktx"}
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+google-android-material = {group = "com.google.android.material", name = "material", version.ref = "material"}
+androidx-constraintlayout = {group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout"}
+junit = {group = "junit", name = "junit", version.ref = "junit"}
+androidx-junit = {group = "androidx.test.ext", name = "junit", version.ref = "junitVersion"}
+androidx-espresso-core = {group = "androidx.test.espresso" ,name = "espresso-core", version.ref = "espressoCore"}
+
+#LiveData, ViewModel, navegación
+androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
+androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleLivedataKtx" }
+androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+
+#ROOM
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomKtx" }
+
+#Retrofit
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+
+#Hilt
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroid" }
+
+#Librería de utilidades
+libreria_pcs = { module = "com.github.programadorescs:LibreriaPcs", version.ref = "libreriaPcs" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+
+[plugins]
+androidApplication = {id ="com.android.application", version.ref = "agp"}
+jetbrainsKotlinAndroid = {id ="org.jetbrains.kotlin.android", version.ref = "kotlin"}
+
+#Dagger
+dagger-hilt-android = {id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid"}
+kotlin-kapt = {id = "org.jetbrains.kotlin.kapt",version.ref = "kotlin"}
+
+#room
+ksp = {id = "com.google.devtools.ksp", version.ref = "kspVersion"}

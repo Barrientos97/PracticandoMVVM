@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">practicandoMVVM</string>
+    <string name="titulo">Titulo</string>
+    <string name="subtitulo">Subtitulo\n</string>
+    <string name="descripcion">Descripción</string>
+    <string name="codigo_de_barra">Codigo de Barra</string>
+    <string name="precio">precio</string>
+    <string name="buscar">buscar</string>
+</resources>
