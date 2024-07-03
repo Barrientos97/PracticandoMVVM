@@ -26,9 +26,35 @@ class OperationProductActivity : AppCompatActivity() {
 
         initListener()
         initUiState()
+
+        if(intent.extras != null){
+            viewModel.getProductById(intent.extras!!.getInt("id",0))
+        }
     }
 
     private fun initUiState() {
+        viewModel.uiStateProduct.observe(this){
+            when(it){
+                is UiState.Error -> {
+                    binding.progressBar.isVisible = false
+                    UtilsMessage.showAlertOk(
+                        "ERROR", it.message,this
+                    )
+                }
+                is UiState.Loading -> binding.progressBar.isVisible = true
+                is UiState.Success -> {
+                    binding.progressBar.isVisible = false
+
+                    binding.etDescripcion.setText(it.data?.descripcion)
+                    binding.etCodigoBarra.setText(it.data?.codigoBarra)
+                    binding.etPrecio.setText(
+                        UtilsCommon.formatFromDoubleToString(it.data?.precio?:0.0)
+                    )
+                }
+            }
+        }
+
+
         // Observar los estados de la UI
 
         viewModel.uiStateSave.observe(this){
@@ -43,6 +69,7 @@ class OperationProductActivity : AppCompatActivity() {
                 is UiState.Success ->{
                     binding.progressBar.isVisible = false
 
+                    viewModel.setItem(null)
                     UtilsCommon.cleanEditText(binding.root.rootView)
                     binding.etDescripcion.requestFocus()
                     UtilsMessage.showToast(this,"El registro fue grabado correctamente")
