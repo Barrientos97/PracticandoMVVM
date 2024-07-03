@@ -3,7 +3,9 @@ package com.example.practicandomvvm.presentation.iu.operationProduct
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isVisible
+import com.example.practicandomvvm.R
 import com.example.practicandomvvm.databinding.ActivityOperationProductBinding
 import com.example.practicandomvvm.domain.model.Product
 import com.example.practicandomvvm.presentation.common.UiState
@@ -24,9 +26,35 @@ class OperationProductActivity : AppCompatActivity() {
 
         initListener()
         initUiState()
+
+        if(intent.extras != null){
+            viewModel.getProductById(intent.extras!!.getInt("id",0))
+        }
     }
 
     private fun initUiState() {
+        viewModel.uiStateProduct.observe(this){
+            when(it){
+                is UiState.Error -> {
+                    binding.progressBar.isVisible = false
+                    UtilsMessage.showAlertOk(
+                        "ERROR", it.message,this
+                    )
+                }
+                is UiState.Loading -> binding.progressBar.isVisible = true
+                is UiState.Success -> {
+                    binding.progressBar.isVisible = false
+
+                    binding.etDescripcion.setText(it.data?.descripcion)
+                    binding.etCodigoBarra.setText(it.data?.codigoBarra)
+                    binding.etPrecio.setText(
+                        UtilsCommon.formatFromDoubleToString(it.data?.precio?:0.0)
+                    )
+                }
+            }
+        }
+
+
         // Observar los estados de la UI
 
         viewModel.uiStateSave.observe(this){
@@ -41,6 +69,7 @@ class OperationProductActivity : AppCompatActivity() {
                 is UiState.Success ->{
                     binding.progressBar.isVisible = false
 
+                    viewModel.setItem(null)
                     UtilsCommon.cleanEditText(binding.root.rootView)
                     binding.etDescripcion.requestFocus()
                     UtilsMessage.showToast(this,"El registro fue grabado correctamente")
@@ -53,6 +82,10 @@ class OperationProductActivity : AppCompatActivity() {
         binding.includeLayout.toolbar.apply {
             title = "Registrar | Editar"
             subtitle = "Producto"
+            navigationIcon = AppCompatResources.getDrawable(
+                this@OperationProductActivity,
+                R.drawable.ic_back
+            )
 
             setNavigationOnClickListener {
                 onBackPressedDispatcher.onBackPressed()
