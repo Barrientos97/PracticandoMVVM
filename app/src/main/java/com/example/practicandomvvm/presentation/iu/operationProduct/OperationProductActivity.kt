@@ -1,6 +1,7 @@
 package com.example.practicandomvvm.presentation.iu.operationProduct
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
@@ -9,6 +10,7 @@ import com.example.practicandomvvm.R
 import com.example.practicandomvvm.databinding.ActivityOperationProductBinding
 import com.example.practicandomvvm.domain.model.Product
 import com.example.practicandomvvm.presentation.common.UiState
+import com.example.practicandomvvm.presentation.iu.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import pe.pcs.libpcs.UtilsCommon
 import pe.pcs.libpcs.UtilsMessage
@@ -69,6 +71,8 @@ class OperationProductActivity : AppCompatActivity() {
                 is UiState.Success ->{
                     binding.progressBar.isVisible = false
 
+                    MainActivity.existeCambio = true
+
                     viewModel.setItem(null)
                     UtilsCommon.cleanEditText(binding.root.rootView)
                     binding.etDescripcion.requestFocus()
@@ -91,6 +95,8 @@ class OperationProductActivity : AppCompatActivity() {
                 onBackPressedDispatcher.onBackPressed()
             }
         }
+
+        binding.includeLayout.ibSincronizar.visibility = View.GONE
 
         binding.fabGrabar.setOnClickListener {
             UtilsCommon.hideKeyboard(this,it)

@@ -12,4 +12,20 @@
     app:subtitle="@string/subtitulo"
     app:subtitleCentered="true"
     app:subtitleTextColor="@color/grey"
-    xmlns:app="http://schemas.android.com/apk/res-auto" />
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <ImageButton
+        android:id="@+id/ib_sincronizar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_autorenew"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:tint="@color/grey"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_gravity="end|center_vertical" />
+
+
+</com.google.android.material.appbar.MaterialToolbar>
