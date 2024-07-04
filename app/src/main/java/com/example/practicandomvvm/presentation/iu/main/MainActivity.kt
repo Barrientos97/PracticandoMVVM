@@ -38,8 +38,15 @@ class MainActivity : AppCompatActivity(), ProductAdapter.IOnClickListener {
 
         initListener()
         initUiState()
+        viewModel.getListApi(binding.etBuscar.text.toString().trim())
+    }
 
-        viewModel.getList(binding.etBuscar.text.toString().trim())
+    override fun onResume() {
+        super.onResume()
+
+        if (!existeCambio) return
+        viewModel.getListApi("")
+        existeCambio = false
     }
 
     private fun initListener() {
@@ -52,21 +59,30 @@ class MainActivity : AppCompatActivity(), ProductAdapter.IOnClickListener {
                 R.drawable.ic_apps
             )
         }
+
+        binding.includeLayout.ibSincronizar.setOnClickListener {
+            viewModel.getListApi(binding.etBuscar.text.toString().trim())
+        }
+
         binding.rvLista.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = ProductAdapter(this@MainActivity)
         }
 
-        binding.etBuscar.addTextChangedListener(object : TextWatcher{
+        binding.tilBuscar.setEndIconOnClickListener{
+            viewModel.getListApi(binding.etBuscar.text.toString().trim())
+        }
+
+       /* binding.etBuscar.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun afterTextChanged(p0: Editable?) {
-                viewModel.getList(p0.toString().trim())
+                viewModel.getListApi(p0.toString().trim())
             }
 
-        })
+        })*/
 
         binding.fabNuevo.setOnClickListener{
             startActivity(
@@ -123,6 +139,8 @@ class MainActivity : AppCompatActivity(), ProductAdapter.IOnClickListener {
                                 this@MainActivity,
                                 "El registro fue eliminado correctamente"
                             )
+                            viewModel.resetUiStateDelete()
+                            viewModel.getListApi(binding.etBuscar.text.toString().trim())
                         }
                         null -> Unit
                     }
@@ -152,4 +170,9 @@ class MainActivity : AppCompatActivity(), ProductAdapter.IOnClickListener {
             }
         }.create().show()
     }
+
+    companion object{
+        var existeCambio = false
+    }
+
 }

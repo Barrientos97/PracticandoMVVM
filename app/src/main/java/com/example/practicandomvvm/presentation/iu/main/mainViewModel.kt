@@ -6,19 +6,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.practicandomvvm.domain.model.Product
 import com.example.practicandomvvm.domain.usecase.product.DeleteProductUseCase
+import com.example.practicandomvvm.domain.usecase.product.GetListApiUseCase
 import com.example.practicandomvvm.domain.usecase.product.GetListUseCase
 import com.example.practicandomvvm.presentation.common.UiState
 import com.example.practicandomvvm.presentation.common.makeCall
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class mainViewModel @Inject constructor(
     private val getListUseCase: GetListUseCase,
-    private val deleteUseCase: DeleteProductUseCase
+    private val deleteUseCase: DeleteProductUseCase,
+    private val getListApiUseCase: GetListApiUseCase
 ): ViewModel() {
 
     private val _listProduct = MutableStateFlow<List<Product>>(emptyList())
@@ -32,6 +37,10 @@ class mainViewModel @Inject constructor(
     val uiStateDelete: StateFlow<UiState<Int>?> = _uiStateDelete
 
 
+    init {
+        getList("")
+    }
+
     fun resetUiStateList(){
         _uiStateList.value = null
     }
@@ -40,7 +49,7 @@ class mainViewModel @Inject constructor(
         _uiStateDelete.value = null
     }
 
-    fun getList(dato: String){
+    private fun getList(dato: String){
         viewModelScope.launch {
             _uiStateList.value = UiState.Loading()
             makeCall {
@@ -60,6 +69,17 @@ class mainViewModel @Inject constructor(
                 deleteUseCase(model)
             }.let {
                 _uiStateDelete.value = it
+            }
+        }
+    }
+
+    fun getListApi(dato: String){
+        viewModelScope.launch {
+            _uiStateList.value = UiState.Loading()
+            makeCall {
+                getListApiUseCase(dato)
+            }.let {
+                _uiStateList.value = it
             }
         }
     }

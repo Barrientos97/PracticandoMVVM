@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.practicandomvvm.data.local.dao.ProductDao
 import com.example.practicandomvvm.data.local.database.AppDatabase
+import com.example.practicandomvvm.data.remote.api.ProductApi
 import com.example.practicandomvvm.data.repository.ProductRepositoryImpl
 import com.example.practicandomvvm.domain.repository.ProductRepository
 import dagger.Module
@@ -38,8 +39,8 @@ object RoomModule {
     // Proveer el repositorio
     @Singleton
     @Provides
-    fun provideProductRepository(dao: ProductDao): ProductRepository {
-        return ProductRepositoryImpl(dao)
+    fun provideProductRepository(dao: ProductDao, api: ProductApi): ProductRepository {
+        return ProductRepositoryImpl(dao, api)
     }
 }
 

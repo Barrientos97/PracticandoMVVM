@@ -12,4 +12,6 @@ interface ProductRepository {
     suspend fun save(model: Product): Int
 
     suspend fun delete(model: Product): Int
+
+    suspend fun getListApi(dato: String): List<Product>
 }
